@@ -1,0 +1,12 @@
+os
+sys
+Streamlit
+vectorbt
+pandas
+numpy
+plotly
+pytz
+yfinance
+streamlit-tradingview
+pandas_ta
+seaborn

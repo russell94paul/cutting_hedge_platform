@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Extract OHLCV Data",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/extract.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Extract OHLCV Data",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/run.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
