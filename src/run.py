@@ -61,16 +61,19 @@ fi.plot_feature_importance(perm_importances, title='Permutation Feature Importan
 # Make Predictions
 ohlcv = mp.make_predictions(model, X, ohlcv)
 
+# Convert Predicted Returns to Signals - for vbt
+ohlcv = bt.convert_to_signals(ohlcv)
+
 # Backtesting - model prediction simulation
 ohlcv = bt.backtest_strategy(ohlcv)
 print(ohlcv[['Predicted Return', 'Strategy Return', 'Cumulative Return']])
 
-# Convert Predicted Returns to Signals - for vbt
-ohlcv = bt.convert_to_signals(ohlcv)
-
 # VectorBT Backtesting - Trade Simulation
-portfolio = bt.vectorbt_backtest(ohlcv)
+portfolio = bt.vectorbt_backtest(ohlcv, size=0.025, freq='D')
 print(portfolio.stats())
+
+fig = portfolio.plot(theme='dark')
+fig.show()
 
 # TO-DO: Create dashboard to display stats (using streamlit - if possible)
 
@@ -88,3 +91,5 @@ print(portfolio.stats())
 ### 3.2. Walkforward Optimization
 
 ## 4. Risk management module - see CodeTrading YouTube Channel
+
+## 5. Data Preprocessing - resample - tick to daily, 1h, 15m , 5m 

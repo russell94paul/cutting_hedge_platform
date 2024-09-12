@@ -1,4 +1,4 @@
-from features.indicators import technical_indicators as ta_ind
+from feature.feature_library import technical_indicators as ta_ind
 
 def add_technical_indicators(ohlcv):
     """

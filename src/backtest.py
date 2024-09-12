@@ -61,14 +61,18 @@ def convert_to_signals(df, prediction_column='Predicted Return', threshold=0):
     df['Signal'] = df[prediction_column].apply(lambda x: 1 if x > threshold else (-1 if x < -threshold else 0))
     return df
 
-def vectorbt_backtest(df, price_column='Adj Close', signal_column='Signal'):
+def vectorbt_backtest(df, price_column='Adj Close', signal_column='Signal', size=None, freq='D'):
     """
-    Perform backtesting using vectorbt.
+    Perform backtesting using vectorbt with risk management and trade management parameters.
     
     Parameters:
     df (pd.DataFrame): Dataframe containing price data and signals.
     price_column (str): Column name for price data.
     signal_column (str): Column name for trading signals.
+    stop_loss (float): Stop-loss percentage (e.g., 0.05 for 5%).
+    take_profit (float): Take-profit percentage (e.g., 0.1 for 10%).
+    size (float): Position size as a fraction of the portfolio (e.g., 0.1 for 10%).
+    freq (str): Frequency of the data (e.g., 'D' for daily, 'W' for weekly).
     
     Returns:
     vbt.Portfolio: vectorbt Portfolio object with backtest results.
@@ -77,7 +81,13 @@ def vectorbt_backtest(df, price_column='Adj Close', signal_column='Signal'):
     entries = df[signal_column] == 1
     exits = df[signal_column] == -1
     
-    # Perform backtest using vectorbt
-    portfolio = vbt.Portfolio.from_signals(df[price_column], entries, exits)
+    # Perform backtest using vectorbt with risk management parameters
+    portfolio = vbt.Portfolio.from_signals(
+        df[price_column],
+        entries,
+        exits,
+        size=size,
+        freq=freq  # Set frequency
+    )
     
     return portfolio
